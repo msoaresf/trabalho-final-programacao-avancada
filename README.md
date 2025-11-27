@@ -1,6 +1,6 @@
 # trabalho-final-programacao-avancada
 
-Sistema de Controle de Estoque e Vendas
+Sistema de Controle de Estoque e Vendas: Maria Eduarda Soares e Leticia Azambuja
 
 Este projeto implementa um sistema completo de gestão de estoque e registro de vendas, com foco na persistência de dados (usando pickle) e na análise estatística de vendas utilizando a biblioteca NumPy.
 
