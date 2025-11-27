@@ -12,26 +12,26 @@ O sistema é iniciado através do arquivo "Programa_principal.py" e apresenta um
 
 ### Menu Principal
 
-1 - Gerenciamento de Estoque
-2 - Sistema de Vendas 
-0 - Sair 
+* 1 - Gerenciamento de Estoque
+* 2 - Sistema de Vendas 
+* 0 - Sair 
 
 ### 1. Gerenciamento de Estoque
 
-1 - Cadastrar produto 
-2 - Listar produtos cadastrados 
-3 - Editar produto 
-4 - Excluir produto 
-5 - Gerar relatório 
-0 - Voltar ao menu principal 
+* 1 - Cadastrar produto 
+* 2 - Listar produtos cadastrados 
+* 3 - Editar produto 
+* 4 - Excluir produto 
+* 5 - Gerar relatório 
+* 0 - Voltar ao menu principal 
 
 ### 2. Sistema de Vendas
 
 
-1 - Realizar Venda (inclui listagem de produtos) 
-2 - Listar Vendas (Histórico) 
-3 - Análise das vendas (NumPy) 
-0 - Voltar ao menu principal 
+* 1 - Realizar Venda (inclui listagem de produtos) 
+* 2 - Listar Vendas (Histórico) 
+* 3 - Análise das vendas (NumPy) 
+* 0 - Voltar ao menu principal 
 
 ## Análise de Dados com NumPy
 
@@ -48,11 +48,10 @@ O projeto é composto pelos seguintes arquivos Python:
 
 | Arquivo | Descrição |
 | :--- | :--- |
-| `Programa_principal.py` | **Ponto de entrada do sistema.** Contém o menu principal de múltiplos níveis e a lógica de navegação. |
-| `sistemaVendas.py` | Contém a classe `SistemaDeVendas`, responsável por gerenciar o carrinho, finalizar vendas e realizar a **Análise de Vendas (NumPy)**. |
+| `Programa_principal.py` | **Ponto de entrada do sistema.** Contém o menu principal. |
+| `sistemaVendas.py` | Contém a classe `SistemaDeVendas`, responsável por gerenciar o carrinho, finalizar vendas e realizar a **Análise de Vendas (NumPy)**. Contém tambem a classe `Historico`, que define a estrutura de dados de cada venda registrada.|
 | `Arquivar.py` | Contém a classe `ControleEstoque`, responsável por todas as operações de CRUD (Criar, Ler, Atualizar, Deletar) do estoque e persistência de dados (`estoque.pkl`). |
 | `Produtos.py` | Contém a classe `Produto`, que define a estrutura de dados de cada item do estoque. |
-| `compras.py` | Contém a classe `Historico`, que define a estrutura de dados de cada venda registrada. |
 
 ## Requisitos
 
