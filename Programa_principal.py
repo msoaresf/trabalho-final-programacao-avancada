@@ -1,12 +1,13 @@
 from Arquivar import ControleEstoque
 from sistemaVendas import SistemaDeVendas
-
+from colorama import Fore, init
+init()
 controle_estoque = ControleEstoque()
 controle_vendas = SistemaDeVendas()
 
 
 while True:
-    print("----------------------------------------------------------------------\n"
+    print(Fore.CYAN +"----------------------------------------------------------------------\n"
     "==========================MENU PRINCIPAL===========================\n"
     "----------------------------------------------------------------------\n"
     "\n"
@@ -16,16 +17,16 @@ while True:
     try:
         opcao= int(input("Escolha: "))
     except ValueError:
-        print("ERRO: A OPCAO DEVE SER UM NUMERO")
+        print(Fore.RED +"ERRO: A OPCAO DEVE SER UM NUMERO")
         continue
     except Exception as e:
-        print(f"ERRO INESPERADO, DESCULPA :/ ->  {e}")
+        print(Fore.RED +f"ERRO INESPERADO, DESCULPA :/ ->  {e}")
         continue
     match opcao:
         case 1:
                 while True:
 
-                    print("----------------------------------------------------------------------\n"
+                    print(Fore.BLUE +"----------------------------------------------------------------------\n"
                     "====================SISTEMA DE CONTROLE DE ESTOQUE====================\n"
                     "----------------------------------------------------------------------\n"
                     "\n"
@@ -51,19 +52,19 @@ while True:
                         elif a == 5:
                             controle_estoque.gerar_relatorio()
                         elif a == 0:
-                            print("SISTEMA ENCERRADO!")
+                            print(Fore.RED +"Voltando para o menu!")
                             break
                         else:
-                            print("Valor inválido!\n")
+                            print(Fore.RED +"Valor inválido!\n")
                     except ValueError:
-                        print("ERRO: Entrada inválida!\n"
+                        print(Fore.RED +"ERRO: Entrada inválida!\n"
                             "Por favor, digite um número.\n")
                     except Exception as e:
-                        print(f"Ocorreu um erro inesperado: {e}.\n")
+                        print(Fore.RED + f"Ocorreu um erro inesperado: {e}.\n")
         case 2:
                 while True:
 
-                    print("----------------------------------------------------------------------\n"
+                    print(Fore.BLUE +"----------------------------------------------------------------------\n"
                     "====================SISTEMA DE COTROLE DE VENDAS====================\n"
                     "----------------------------------------------------------------------\n"
                     "\n"
@@ -82,16 +83,16 @@ while True:
                         elif c == 3:
                             controle_vendas.analise()
                         elif c == 0:
-                            print("SISTEMA ENCERRADO!")
+                            print(Fore.RED +"Voltando para o menu!")
                             break
                         else:
-                            print("Valor inválido!\n")
+                            print(Fore.RED +"Valor inválido!\n")
                     except ValueError:
-                        print("ERRO: Entrada inválida!\n"
+                        print(Fore.RED +"ERRO: Entrada inválida!\n"
                             "Por favor, digite um número.2\n")
                     except Exception as e:
-                        print(f"Ocorreu um erro inesperado: {e}.\n")
+                        print(Fore.RED +f"Ocorreu um erro inesperado: {e}.\n")
         case 0:
                 break 
         case _:
-                print("Opção inválida! Tente novamente.")
+                print(Fore.RED + "Opção inválida! Tente novamente.")

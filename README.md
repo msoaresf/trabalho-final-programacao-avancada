@@ -55,10 +55,17 @@ O projeto é composto pelos seguintes arquivos Python:
 
 ## Requisitos
 
-Para executar o projeto, você precisa ter o Python instalado e a biblioteca "numpy".
+Para executar o projeto, você precisa ter o Python instalado e as bibliotecas "numpy" e "colorama".
 
 ```bash
 pip install numpy
+```
+```bash
+pip install colorama
+```
+OU 
+```bash
+pip install -r requirements.txt
 ```
 
 ## Como Executar
