@@ -34,7 +34,7 @@ while True:
                     "3 - Editar produto\n"
                     "4 - Excluir produto\n"
                     "5 - Gerar relatório\n"
-                    "0 - Sair")
+                    "0 - Voltar ao menu principal")
 
                     try:
                         a = int(input("Escolha: "))
@@ -70,7 +70,7 @@ while True:
                     "1 - Realizar Venda\n"
                     "2 - Listar Vendas\n"
                     "3 - Analise das vendas\n"
-                    "0 - Sair\n")
+                    "0 - Voltar ao menu principal\n")
                     try:
                         c = int(input("Escolha: "))
                         print("\n")
@@ -88,7 +88,7 @@ while True:
                             print("Valor inválido!\n")
                     except ValueError:
                         print("ERRO: Entrada inválida!\n"
-                            "Por favor, digite um número.\n")
+                            "Por favor, digite um número.2\n")
                     except Exception as e:
                         print(f"Ocorreu um erro inesperado: {e}.\n")
         case 0:

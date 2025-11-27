@@ -4,15 +4,34 @@ from Produtos import Produto
 
 class ControleEstoque:
 
+    """
+    Classe que gerencia o arquivo do estoque, utilizando persistência de dados e operações CRUD.
+    """
+
     n_arquivo = "estoque.pkl"
 
     def __init__(self):
+        """
+        Construtor da classe ControleEstoque que inicializa: \n
+        \n-uma lista de produtos;
+        \n-um dicionário de descrições registradas;
+        \n-um set() de códigos registrados
+        \n-chamada do método _carregar_dados.
+        """
         self.produtos = []
         self.descricoes_registradas = {}
         self.codigos_registrados = set()
         self._carregar_dados()
 
     def _carregar_dados(self):
+        """
+        Método que carrega os dados contidos no arquivo: estoque.pkl \n
+        Lida com:
+        \n-FileNotFoundError(arquivo não encontrado);
+        \n-IOError(sem acesso ao arquivo);
+        \n-EOFError(arquivo vazio ou corrompido);
+        \n-pickle.PickleError(fluxo de dados não pode ser lido)
+        """
         try:
             with open(self.n_arquivo, "rb") as estoque:
                 self.produtos = pickle.load(estoque)
@@ -31,6 +50,14 @@ class ControleEstoque:
             print(f"Erro ao carregar dados: {e}.\n")
 
     def _salvar_dados(self):
+        """
+        Método que salva os dados no arquivo: estoque.pkl \n
+        Lida com:
+        \n-FileNotFoundError(arquivo não encontrado);
+        \n-IOError(sem acesso ao arquivo);
+        \n-EOFError(arquivo vazio ou corrompido);
+        \n-pickle.PickleError(fluxo de dados não pode ser lido)
+        """
         try:
             with open(self.n_arquivo, "wb") as estoque:
                 pickle.dump(self.produtos, estoque)
@@ -46,6 +73,12 @@ class ControleEstoque:
             print(f"Erro ao salvar dados: {e}.\n")
 
     def cadastrar_produto(self):
+        """
+        Método que cadastra novos produtos \n
+        Lida com:\n
+        -ValueError(erro de tipo de dado)
+        :returns: None
+        """
         try:
             descricao = input("Descrição: ").upper().replace(" ", "")
             if descricao in self.descricoes_registradas:
@@ -76,6 +109,10 @@ class ControleEstoque:
             print(f"Erro ao cadastrar produto: {e}.\n")
 
     def listar_produtos(self):
+        """
+        Método que lista os produtos cadastrados e suas informações
+        :return: None
+        """
         if not self.produtos:
             print("Nenhum produto cadastrado.\n")
             return
@@ -87,18 +124,34 @@ class ControleEstoque:
         print("---------------------------\n")
 
     def _encontrar_produto_por_codigo(self, codigo: int):
+        """
+        Método protegido que indentifica um produto a partir do código \n
+        :param codigo: código a ser procurado (int)
+        :returns: Produto(str), None
+        """
         for produto in self.produtos:
             if produto.codigo == codigo:
                 return produto
         return None
 
     def _encontrar_produto_por_descricao(self, descricao: str):
+        """
+        Método protegido que indentifica um produto a partir da descrição \n
+        :param descricao: descrição a ser procurada (str)
+        :returns: Produto(str), None
+        """
         for produto in self.produtos:
             if produto.descricao == descricao.upper().replace(" ", ""):
                 return produto
         return None
 
     def editar_produto(self):
+        """
+        Método que possibilita a edição de um produto \n
+        Lida com:
+        \n-ValueError(erro de tipo de dado)
+        :returns: None
+        """
         try:
             edicao = int(input("Deseja pesquisar o produto por:\n"
                                "1 - Código\n"
@@ -119,59 +172,80 @@ class ControleEstoque:
                 return
 
             print(f"Produto atual: \n{produto_para_editar}")
-            editar = int(input("Deseja editar:\n" 
+
+            while True:
+                editar = int(input("Deseja editar:\n" 
                                "1 - Descrição\n" 
                                "2 - Categoria\n" 
                                "3 - Preço de compra\n" 
                                "4 - Preço de venda\n"
-                               "5 - Quantidade\n" 
+                               "5 - Quantidade\n"
+                               "0 - Sair da edição\n" 
                                "Número: "))
 
-            if editar == 1:
-                nova_descricao = input("Nova descrição: ").upper().replace(" ", "")
-                if nova_descricao != produto_para_editar.descricao:
-                    if nova_descricao in self.descricoes_registradas:
-                        print(f"ERRO: O produto \"{nova_descricao}\" já está registrado.\n")
-                        return
-                    produto_para_editar.descricao = nova_descricao
+                if editar == 1:
+                    nova_descricao = input("Nova descrição: ").upper().replace(" ", "")
+                    if nova_descricao != produto_para_editar.descricao:
+                        if nova_descricao in self.descricoes_registradas:
+                            print(f"ERRO: O produto \"{nova_descricao}\" já está registrado.\n")
+                            continue
+                        produto_para_editar.descricao = nova_descricao
+                        continue
+                    else:
+                        print("A nova descrição do produto é a mesma que a atual.\n")
+                        continue
+                elif editar == 2:
+                    nova_categoria = input("Nova categotia (fruta, verdura, legume): ")
+                    if nova_categoria not in ["fruta", "verdura", "legume"]:
+                        print("Categoria inválida!\n")
+                        continue
+                    produto_para_editar.categoria = nova_categoria
+                    continue
+                elif editar == 3:
+                    novo_preco_compra = float(input("Novo preço de compra: "))
+                    if novo_preco_compra >= 0:
+                        produto_para_editar.preco_compra = format(novo_preco_compra, ".2f")
+                        continue
+                    else:
+                        print("Preço não pode ser negativo!")
+                        continue
+                elif editar == 4:
+                    novo_preco_venda = float(input("Novo preço de venda: "))
+                    if novo_preco_venda >= 0:
+                        produto_para_editar.preco_venda = format(novo_preco_venda, ".2f")
+                        continue
+                    else:
+                        print("Preço não pode ser negativo!")
+                        continue
+                elif editar == 5:
+                    nova_quantidade = float(input("Nova quantidade (kg): "))
+                    if nova_quantidade >= 0:
+                        produto_para_editar.quantidade = format(nova_quantidade, ".3f")
+                        continue
+                    else:
+                        print("Preço não pode ser negativo!")
+                        continue
+                elif editar == 0:
+                    self._salvar_dados()
+                    print("Produto editado e salvo com sucesso!\n")
+                    print(f"Resumo do produto editado: \n{produto_para_editar}\n")
+                    break
                 else:
-                    print("A nova descrição do produto é a mesma que a atual.\n")
-            elif editar == 2:
-                nova_categoria = input("Nova categotia (fruta, verdura, legume): ")
-                if nova_categoria not in ["fruta", "verdura", "legume"]:
-                    print("Categoria inválida!\n")
-                    return
-                produto_para_editar.categoria = nova_categoria
-            elif editar == 3:
-                novo_preco_compra = float(input("Novo preço de compra: "))
-                if novo_preco_compra >= 0:
-                    produto_para_editar.preco_compra = format(novo_preco_compra, ".2f")
-                else:
-                    print("Preço não pode ser negativo!")
-                    return
-            elif editar == 4:
-                novo_preco_venda = float(input("Novo preço de venda: "))
-                if novo_preco_venda >= 0:
-                    produto_para_editar.preco_venda = format(novo_preco_venda, ".2f")
-                else:
-                    print("Preço não pode ser negativo!")
-                    return
-            elif editar == 5:
-                nova_quantidade = float(input("Quantidade (kg) adicionada ou retirada: "))
-                produto_para_editar.quantidade = format(nova_quantidade, ".3f")
-            else:
-                print("ERRO: Valor inválido!\n")
-                return
+                    print("ERRO: Valor inválido!\n")
+                    continue
 
-            self._salvar_dados()
-            print("Produto editado e salvo com sucesso!\n")
-            print(f"Resumo do produto editado: \n{produto_para_editar}\n")
         except ValueError:
             print("ERRO: Entrada inválida.\n")
         except Exception as e:
             print(f"Erro ao editar produto: {e}.\n")
 
     def excluir_produto(self):
+        """
+        Método que possibilita a exclusão de um produto \n
+        Lida com:
+        -ValueError(erro de tipo de dado)
+        :returns: None
+        """
         try:
             excluir = int(input("Deseja pesquisar o produto por:\n"
                                "1 - Código\n"
@@ -216,6 +290,10 @@ class ControleEstoque:
             print(f"Erro ao excluir produto: {e}\n")
 
     def gerar_relatorio(self):
+        """
+        Método que gera um relátorio dos produtos cadastrados e suas informações
+        :returns: None
+        """
         if not self.produtos:
             print("Nenhum produto cadastrado!\n")
             return
